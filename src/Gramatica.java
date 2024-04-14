@@ -14,83 +14,157 @@ public class Gramatica {
     }
     public static void TipoIdentificacion(String[] codigo){
         ArrayList<String> tipo = new ArrayList<String>();
-        boolean aux;
+        String[][] aux = new String[codigo.length][2];
+        String auxTipoFuncion,auxTipoVariable,auxTipoLetras,auxTipoNumeros,auxTipoOperadoresComparacion,auxTipoInicioCondicion,auxTipoFinCondicion,auxTipoInicioCuerpo,auxTipoFinCuerpo,auxTipoComillas = " ";
         //Identificacion de funciones y palabras Reservadas?
         for(int i=0;i<codigo.length;i++){
-            tipo = Funciones(codigo[i],tipo);
-            tipo = Letras(codigo[i], tipo);
-            tipo = Numeros(codigo[i],tipo);
-            tipo = OperadoresComparacion(codigo[i],tipo);
-            tipo = InicioCondicion(codigo[i],tipo);
-            tipo = FinCondicion(codigo[i],tipo);
-            tipo = InicioCuerpo(codigo[i],tipo);
-            tipo = FinCuerpo(codigo[i],tipo);
-            tipo = Espacio(codigo[i],tipo);
+            auxTipoFuncion = Funciones(codigo[i]);
+            if (auxTipoFuncion == "Funcion"){
+                aux[i][0] = codigo[i];
+                aux[i][1] = auxTipoFuncion;
+            }
+            auxTipoVariable = Variable(codigo[i]);
+            if(auxTipoVariable == "Variable" && auxTipoComillas != "Comillas" && auxTipoFuncion != "Funcion"){
+                aux[i][0] = codigo[i];
+                aux[i][1] = auxTipoVariable;
+            }
+            auxTipoLetras = Letras(codigo[i]);
+            if(auxTipoLetras == "Letras" && auxTipoVariable != "Variable"){
+                aux[i][0] = codigo[i];
+                aux[i][1] = auxTipoLetras;
+            }
+
+            auxTipoNumeros = Numeros(codigo[i]);
+            if(auxTipoNumeros == "Numeros" ){
+                aux[i][0] = codigo[i];
+                aux[i][1] = auxTipoNumeros;
+            }
+            auxTipoOperadoresComparacion = OperadoresComparacion(codigo[i]);
+            if(auxTipoOperadoresComparacion == "OperadorComparacion"){
+                aux[i][0] = codigo[i];
+                aux[i][1] = auxTipoOperadoresComparacion;
+            }
+            auxTipoInicioCondicion = InicioCondicion(codigo[i]);
+            if(auxTipoInicioCondicion == "InicioCondicion"){
+                aux[i][0] = codigo[i];
+                aux[i][1] = auxTipoInicioCondicion;
+            }
+            auxTipoFinCondicion = FinCondicion(codigo[i]);
+            if(auxTipoFinCondicion == "FinCondicion"){
+                aux[i][0] = codigo[i];
+                aux[i][1] = auxTipoFinCondicion;
+            }
+            auxTipoInicioCuerpo = InicioCuerpo(codigo[i]);
+            if(auxTipoInicioCuerpo == "InicioCuerpo"){
+                aux[i][0] = codigo[i];
+                aux[i][1] = auxTipoInicioCuerpo;
+            }
+            auxTipoFinCuerpo = FinCuerpo(codigo[i]);
+            if(auxTipoFinCuerpo == "FinCuerpo"){
+                aux[i][0] = codigo[i];
+                aux[i][1] = auxTipoFinCuerpo;
+            }
+            auxTipoComillas = Comillas(codigo[i]);
+            if(auxTipoComillas == "Comillas"){
+                aux[i][0] = codigo[i];
+                aux[i][1] = auxTipoComillas;
+            }
+
+            //tipo = Espacio(codigo[i],tipo);
         }
-        System.out.println(tipo);
+        for(int i=0;i<codigo.length;i++) {
+            System.out.println(aux[i][0]+" "+aux[i][1]);
+        }
     }
-    public static ArrayList<String> Letras(String codigo,ArrayList<String> tipo){
+    public static String Letras(String codigo){
+        String funcion = " ";
         Pattern patternLetras = Pattern.compile("[A-Za-z]");
         Matcher matcherLetras = patternLetras.matcher(codigo);
         boolean matchFoundLetras = matcherLetras.find();
         if(matchFoundLetras){
-            tipo.add("Letras");
+            funcion = "Letras";
         }
-        return tipo;
+        return funcion;
     }
-    public static ArrayList<String> Numeros(String codigo,ArrayList<String> tipo){
+    public static String Numeros(String codigo){
+        String funcion = " ";
         Pattern patternNumeros = Pattern.compile("[0-9]");
         Matcher matcherNumeros = patternNumeros.matcher(codigo);
         boolean matchFoundNumeros = matcherNumeros.find();
         if(matchFoundNumeros){
-            tipo.add("Numeros");
+            funcion = "Numeros";
         }
-        return tipo;
+        return funcion;
     }
-    public static ArrayList<String> OperadoresComparacion(String codigo,ArrayList<String> tipo){
+    public static String OperadoresComparacion(String codigo){
+        String funcion = " ";
         Pattern patternOperadoresComparacion = Pattern.compile("[==,>=,<=,<,>,!=,&&]");
         Matcher matcherOperadoresComparacion = patternOperadoresComparacion.matcher(codigo);
         boolean foundOperadoresComparacion = matcherOperadoresComparacion.find();
         if(foundOperadoresComparacion){
-            tipo.add("OperadorComparacion");
+            funcion = "OperadorComparacion";
         }
-        return tipo;
+        return funcion;
     }
-    public static ArrayList<String> InicioCondicion(String codigo,ArrayList<String> tipo){
+    public static String InicioCondicion(String codigo){
+        String funcion = " ";
         Pattern patternInicioCondicion = Pattern.compile("[(]");
         Matcher matcherInicioCondicion = patternInicioCondicion.matcher(codigo);
         boolean matchFoundInicioCondicion = matcherInicioCondicion.find();
         if(matchFoundInicioCondicion){
-            tipo.add("InicioCondicion");
+            funcion = "InicioCondicion";
         }
-        return tipo;
+        return funcion;
     }
-    public static ArrayList<String> FinCondicion(String codigo,ArrayList<String> tipo){
+    public static String FinCondicion(String codigo){
+        String funcion = " ";
         Pattern patternFinCondicion = Pattern.compile("[)]");
         Matcher matcherFinCondicion = patternFinCondicion.matcher(codigo);
         boolean matchFoundFinCondicion = matcherFinCondicion.find();
         if(matchFoundFinCondicion){
-            tipo.add("FinCondicion");
+            funcion = "FinCondicion";
         }
-        return tipo;
+        return funcion;
     }
-    public static ArrayList<String> InicioCuerpo(String codigo,ArrayList<String> tipo){
+    public static String InicioCuerpo(String codigo){
+        String funcion = " ";
         Pattern patternInicioCuerpo = Pattern.compile("[{]");
         Matcher matcherInicioCuerpo = patternInicioCuerpo.matcher(codigo);
         boolean matchFoundInicioCuerpo = matcherInicioCuerpo.find();
         if(matchFoundInicioCuerpo){
-            tipo.add("InicioCuerpo");
+           funcion = "InicioCuerpo";
         }
-        return tipo;
+        return funcion;
     }
-    public static ArrayList<String> FinCuerpo(String codigo,ArrayList<String> tipo){
+    public static String FinCuerpo(String codigo){
+        String funcion = " ";
         Pattern patternFinCuerpo = Pattern.compile("[}]");
         Matcher matcherFinCuerpo = patternFinCuerpo.matcher(codigo);
         boolean matchFoundFinCuerpo = matcherFinCuerpo.find();
         if(matchFoundFinCuerpo){
-            tipo.add("FinCuerpo");
+            funcion = "FinCuerpo";
         }
-        return tipo;
+        return funcion;
+    }
+    public static String Variable(String codigo){
+        String funcion = " ";
+        Pattern patternVariable = Pattern.compile("[A-Za-z0-9]");
+        Matcher matcherVariable = patternVariable.matcher(codigo);
+        boolean matchFoundVariable = matcherVariable.find();
+        if(matchFoundVariable){
+            funcion = "Variable";
+        }
+        return funcion;
+    }
+    public static String Comillas(String codigo){
+        String funcion = " ";
+        Pattern patternComillas = Pattern.compile("\"");
+        Matcher matcherComillas = patternComillas.matcher(codigo);
+        boolean matchFoundComillas = matcherComillas.find();
+        if(matchFoundComillas){
+            funcion = "Comillas";
+        }
+        return funcion;
     }
     public static ArrayList<String> Espacio(String codigo,ArrayList<String> tipo){
         Pattern patternEspacio = Pattern.compile("[ ]");
@@ -106,39 +180,45 @@ public class Gramatica {
         String[]  codigoDivido = codigo.split("[\\s]");
         return codigoDivido;
     }
-    public static ArrayList<String> Funciones(String codigo,ArrayList<String> funcion){
+    public static String Funciones(String codigo){
         //System.out.println(codigo);
+        String funcion = " ";
         Pattern ifPattern = Pattern.compile("if");
         Matcher ifMatcher = ifPattern.matcher(codigo);
         boolean ifMatch = ifMatcher.find();
         if(ifMatch){
-            funcion.add("Funcion");
+            funcion = "Funcion";
+            return funcion;
         }
         //System.out.println(ifMatch);
         Pattern switchPattern = Pattern.compile("switch");
         Matcher switchMatcher = switchPattern.matcher(codigo);
         boolean switchMatch = switchMatcher.find();
         if(switchMatch){
-            funcion.add("Funcion");
+            funcion = "Funcion";
+            return funcion;
         }
         //System.out.println(switchMatch);
         Pattern forPattern = Pattern.compile("for");
         Matcher forMatcher = forPattern.matcher(codigo);
         boolean forMatch = forMatcher.find();
         if(forMatch){
-            funcion.add("Funcion");
+            funcion = "Funcion";
+            return funcion;
         }
         Pattern whilePattern = Pattern.compile("while");
         Matcher whileMatcher = whilePattern.matcher(codigo);
         boolean whileMatch = whileMatcher.find();
         if(whileMatch){
-            funcion.add("Funcion");
+            funcion = "Funcion";
+            return funcion;
         }
         Pattern doPattern = Pattern.compile("do");
         Matcher doMatcher = doPattern.matcher(codigo);
         boolean doMatch = doMatcher.find();
         if(doMatch){
-            funcion.add("Funcion");
+            funcion = "Funcion";
+            return funcion;
         }
         return funcion;
     }
