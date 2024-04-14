@@ -1,0 +1,11 @@
+public enum Tokens {
+    Etiquetas,
+    PALBRAS_RESERVADAS,
+    FUNCIONES,
+    VARIABLES,
+    NUMEROS,
+    SIMBOLOES,
+    ESPACIO_BLANCOS,
+    COMENTARIOS,
+    REGISTROS
+}
