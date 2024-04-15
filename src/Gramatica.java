@@ -235,6 +235,38 @@ public class Gramatica {
         }
         return funcion;
     }
+    public static String TiposDatso(String codigo){
+        String funcion = " ";
+        Pattern intPattern = Pattern.compile("do");
+        Matcher intMatcher = intPattern.matcher(codigo);
+        boolean intMatch = intMatcher.find();
+        if(intMatch){
+            funcion = "TipoDato";
+            return funcion;
+        }
+        Pattern floatPattern = Pattern.compile("float");
+        Matcher floatMatcher = floatPattern.matcher(codigo);
+        boolean floatMatch = floatMatcher.find();
+        if(floatMatch){
+            funcion = "TipoDato";
+            return funcion;
+        }
+        Pattern doublePattern = Pattern.compile("double");
+        Matcher doubleMatcher = doublePattern.matcher(codigo);
+        boolean doubleMatch = doubleMatcher.find();
+        if(doubleMatch){
+            funcion = "TipoDato";
+            return funcion;
+        }
+        Pattern charPattern = Pattern.compile("char");
+        Matcher charMatcher = charPattern.matcher(codigo);
+        boolean charMatch = charMatcher.find();
+        if(charMatch){
+            funcion = "TipoDato";
+            return funcion;
+        }
+        return funcion;
+    }
     public static void main(String[] args){
         System.out.println("Prueba del archivo Gramatica");
     }
