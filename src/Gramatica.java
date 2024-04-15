@@ -18,7 +18,7 @@ public class Gramatica {
         ArrayList<String> tipo = new ArrayList<String>();
         String[][] aux = new String[codigo.length][2];
         int finComillas = 0;
-        String auxTipoFuncion,auxTipoVariable,auxTipoLetras,auxTipoNumeros,auxTipoOperadoresComparacion,auxTipoInicioCondicion,auxTipoFinCondicion,auxTipoInicioCuerpo,auxTipoFinCuerpo,auxTipoComillas = " ";
+        String auxTipoDato,auxTipoFuncion,auxTipoVariable,auxTipoLetras,auxTipoNumeros,auxTipoOperadoresComparacion,auxTipoInicioCondicion,auxTipoFinCondicion,auxTipoInicioCuerpo,auxTipoFinCuerpo,auxTipoComillas = " ";
         //Identificacion de funciones y palabras Reservadas?
         for(int i=0;i<codigo.length;i++){
             auxTipoFuncion = Funciones(codigo[i]);
@@ -39,11 +39,11 @@ public class Gramatica {
                 aux[i][0] = codigo[i];
                 aux[i][1] = auxTipoVariable;
             }
-            /*auxTipoLetras = Letras(codigo[i]);
-            if(auxTipoLetras == "Letras" && auxTipoFuncion != "Funcion" && auxTipoVariable != " "){
+            auxTipoDato = TiposDatos(codigo[i]);
+            if(auxTipoDato == "TipoDato" && auxTipoFuncion != "Funcion" && auxTipoVariable != " "){
                 aux[i][0] = codigo[i];
-                aux[i][1] = auxTipoLetras;
-            }*/
+                aux[i][1] = auxTipoDato;
+            }
 
             auxTipoNumeros = Numeros(codigo[i]);
             if(auxTipoNumeros == "Numeros" ){
@@ -235,9 +235,9 @@ public class Gramatica {
         }
         return funcion;
     }
-    public static String TiposDatso(String codigo){
+    public static String TiposDatos(String codigo){
         String funcion = " ";
-        Pattern intPattern = Pattern.compile("do");
+        Pattern intPattern = Pattern.compile("int");
         Matcher intMatcher = intPattern.matcher(codigo);
         boolean intMatch = intMatcher.find();
         if(intMatch){
