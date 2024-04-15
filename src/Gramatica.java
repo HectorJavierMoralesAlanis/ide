@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +16,7 @@ public class Gramatica {
     public static void TipoIdentificacion(String[] codigo){
         ArrayList<String> tipo = new ArrayList<String>();
         String[][] aux = new String[codigo.length][2];
+        int finComillas = 0;
         String auxTipoFuncion,auxTipoVariable,auxTipoLetras,auxTipoNumeros,auxTipoOperadoresComparacion,auxTipoInicioCondicion,auxTipoFinCondicion,auxTipoInicioCuerpo,auxTipoFinCuerpo,auxTipoComillas = " ";
         //Identificacion de funciones y palabras Reservadas?
         for(int i=0;i<codigo.length;i++){
@@ -24,15 +26,23 @@ public class Gramatica {
                 aux[i][1] = auxTipoFuncion;
             }
             auxTipoVariable = Variable(codigo[i]);
+            boolean test = Arrays.stream(aux).anyMatch(x -> x[1] == "Comillas");
+            if(test == true && (finComillas%2 != 0)){
+                System.out.println("HAY COMIILAS");
+                auxTipoLetras = Letras(codigo[i]);
+                aux[i][0] = codigo[i];
+                aux[i][1] = auxTipoLetras;
+                finComillas = finComillas + 1;
+            }
             if(auxTipoVariable == "Variable" && auxTipoComillas != "Comillas" && auxTipoFuncion != "Funcion"){
                 aux[i][0] = codigo[i];
                 aux[i][1] = auxTipoVariable;
             }
-            auxTipoLetras = Letras(codigo[i]);
-            if(auxTipoLetras == "Letras" && auxTipoVariable != "Variable"){
+            /*auxTipoLetras = Letras(codigo[i]);
+            if(auxTipoLetras == "Letras" && auxTipoFuncion != "Funcion" && auxTipoVariable != " "){
                 aux[i][0] = codigo[i];
                 aux[i][1] = auxTipoLetras;
-            }
+            }*/
 
             auxTipoNumeros = Numeros(codigo[i]);
             if(auxTipoNumeros == "Numeros" ){
@@ -68,6 +78,7 @@ public class Gramatica {
             if(auxTipoComillas == "Comillas"){
                 aux[i][0] = codigo[i];
                 aux[i][1] = auxTipoComillas;
+                finComillas = finComillas + 1;
             }
 
             //tipo = Espacio(codigo[i],tipo);
