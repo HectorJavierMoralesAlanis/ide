@@ -286,7 +286,7 @@ public class Gramatica {
         Matcher classMatcher = classPattern.matcher(codigo);
         boolean classMatch = classMatcher.find();
         if(classMatch){
-            funcion = "PalabraReservada";
+            funcion = "PalabraReservadas";
             return funcion;
         }
         /*Pattern doublePattern = Pattern.compile("double");
