@@ -8,9 +8,9 @@ public class Gramatica {
     public static void Validacion(String codigo){
         //System.out.println(codigo);
         String[] codigoNuevo = divirCodigo(codigo);
-        for (int i=0;i<codigoNuevo.length;i++ ) {
+        /*for (int i=0;i<codigoNuevo.length;i++ ) {
             System.out.println(codigoNuevo[i]);
-        }
+        }*/
         TipoIdentificacion(codigoNuevo);
     }
     public static void TipoIdentificacion(String[] codigo){
@@ -28,7 +28,7 @@ public class Gramatica {
             auxTipoVariable = Variable(codigo[i]);
             boolean test = Arrays.stream(aux).anyMatch(x -> x[1] == "Comillas");
             if(test == true && (finComillas%2 != 0)){
-                System.out.println("HAY COMIILAS");
+                //System.out.println("HAY COMIILAS");
                 auxTipoLetras = Letras(codigo[i]);
                 aux[i][0] = codigo[i];
                 aux[i][1] = auxTipoLetras;
