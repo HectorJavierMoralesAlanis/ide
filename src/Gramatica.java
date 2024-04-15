@@ -18,7 +18,7 @@ public class Gramatica {
         ArrayList<String> tipo = new ArrayList<String>();
         String[][] aux = new String[codigo.length][2];
         int finComillas = 0;
-        String auxTipoDato,auxTipoFuncion,auxTipoVariable,auxTipoLetras,auxTipoNumeros,auxTipoOperadoresComparacion,auxTipoInicioCondicion,auxTipoFinCondicion,auxTipoInicioCuerpo,auxTipoFinCuerpo,auxTipoComillas = " ";
+        String auxTipoDato,auxPalabrasReservada,auxTipoFuncion,auxTipoVariable,auxTipoLetras,auxTipoNumeros,auxTipoOperadoresComparacion,auxTipoInicioCondicion,auxTipoFinCondicion,auxTipoInicioCuerpo,auxTipoFinCuerpo,auxTipoComillas = " ";
         //Identificacion de funciones y palabras Reservadas?
         for(int i=0;i<codigo.length;i++){
             auxTipoFuncion = Funciones(codigo[i]);
@@ -44,6 +44,12 @@ public class Gramatica {
                 aux[i][0] = codigo[i];
                 aux[i][1] = auxTipoDato;
             }
+            auxPalabrasReservada = PalabrasReservadas(codigo[i]);
+            if(auxPalabrasReservada == "PalabraReservadas" && auxTipoFuncion != "Funcion"){
+                aux[i][0] = codigo[i];
+                aux[i][1] = auxPalabrasReservada;
+            }
+
 
             auxTipoNumeros = Numeros(codigo[i]);
             if(auxTipoNumeros == "Numeros" ){
@@ -246,7 +252,7 @@ public class Gramatica {
         }
         Pattern floatPattern = Pattern.compile("float");
         Matcher floatMatcher = floatPattern.matcher(codigo);
-        boolean floatMatch = floatMatcher.find();
+        boolean floatMatch= floatMatcher.find();
         if(floatMatch){
             funcion = "TipoDato";
             return funcion;
@@ -267,6 +273,39 @@ public class Gramatica {
         }
         return funcion;
     }
+    public static String PalabrasReservadas(String codigo){
+        String funcion = " ";
+        Pattern publicPattern = Pattern.compile("public");
+        Matcher intMatcher = publicPattern.matcher(codigo);
+        boolean intMatch = intMatcher.find();
+        if(intMatch){
+            funcion = "PalabraReservadas";
+            return funcion;
+        }
+        Pattern classPattern = Pattern.compile("class");
+        Matcher classMatcher = classPattern.matcher(codigo);
+        boolean classMatch = classMatcher.find();
+        if(classMatch){
+            funcion = "PalabraReservada";
+            return funcion;
+        }
+        /*Pattern doublePattern = Pattern.compile("double");
+        Matcher doubleMatcher = doublePattern.matcher(codigo);
+        boolean doubleMatch = doubleMatcher.find();
+        if(doubleMatch){
+            funcion = "TipoDato";
+            return funcion;
+        }
+        Pattern charPattern = Pattern.compile("char");
+        Matcher charMatcher = charPattern.matcher(codigo);
+        boolean charMatch = charMatcher.find();
+        if(charMatch){
+            funcion = "TipoDato";
+            return funcion;
+        }*/
+        return funcion;
+    }
+
     public static void main(String[] args){
         System.out.println("Prueba del archivo Gramatica");
     }
