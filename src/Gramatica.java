@@ -5,15 +5,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Gramatica {
-    public static void Validacion(String codigo){
+    public static String[][] Validacion(String codigo){
         //System.out.println(codigo);
         String[] codigoNuevo = divirCodigo(codigo);
         /*for (int i=0;i<codigoNuevo.length;i++ ) {
             System.out.println(codigoNuevo[i]);
         }*/
-        TipoIdentificacion(codigoNuevo);
+        String[][] compilado = TipoIdentificacion(codigoNuevo);
+        return compilado;
     }
-    public static void TipoIdentificacion(String[] codigo){
+    public static String[][] TipoIdentificacion(String[] codigo){
         ArrayList<String> tipo = new ArrayList<String>();
         String[][] aux = new String[codigo.length][2];
         int finComillas = 0;
@@ -83,9 +84,10 @@ public class Gramatica {
 
             //tipo = Espacio(codigo[i],tipo);
         }
-        for(int i=0;i<codigo.length;i++) {
+        /*for(int i=0;i<codigo.length;i++) {
             System.out.println(aux[i][0]+" "+aux[i][1]);
-        }
+        }*/
+        return aux;
     }
     public static String Letras(String codigo){
         String funcion = " ";
